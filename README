@@ -8,7 +8,7 @@ Wed May 18 16:40:26 CST 2011
 # running PageRank algorithm, output to file named toy_data/pagerank_result
 > python run.py -G toy_data/g.el -p -a .85 -O toy_data/pagerank_result
 
-file : toy_data/g.el
+file : toy_data/example_edgelist.el
 0 1
 1 2
 2 3
@@ -22,12 +22,12 @@ file : toy_data/g.el
 > python run.py -G toy_data/g.el -d --heat toy_data/heat -O toy_data/diffusionrank_result
 
 file : toy_data/heat
-3
 0
 0
+1
+1
 0
-0
-0
+1
 
 # running LinearThresoldModel algorithm, output to file named toy_data/lt_result
 > python run.py -G toy_data/g.el -l --seeds toy_data/seed -O toy_data/lt_result
