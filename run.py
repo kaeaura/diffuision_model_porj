@@ -15,7 +15,7 @@ def main(argv):
 	s_path = ""
 	heat = []
 	seeds = []
-	
+
 	try:
 		opts, args = getopt.getopt(argv, "hG:P:H:O:plcda:r:s:", ["help", "graph=", "pref=", "heat=", "alpha=", "gamma=", "seeds="])
 	except getopt.GetoptError:
@@ -25,7 +25,7 @@ def main(argv):
 	for opt, arg in opts:
 		if opt in ("-h", "--help"):
 			print ("-h, --help : show help")
-			print ("-G, --graph [file_path] : graph path")
+			print ("-G, --graph [file_path] : file contains the edge list of a given graph")
 			print ("-P, --pref [file_path] : preference path")
 			print ("-H, --heat [file_path] : heat vector (for DiffusionRank only)")
 			print ("-O [file_path] : output path")
@@ -63,7 +63,7 @@ def main(argv):
 	g = nx.read_edgelist(g_path, create_using=nx.DiGraph(), nodetype = int)
 
 	if model == "page_rank":
-		values = nx.pagerank(g, alpha = 0.85).values() 
+		values = nx.pagerank(g, alpha = 0.85).values()
 	elif model == "diffusion_rank":
 		try:
 			with open(h_path, 'r') as f:
@@ -101,7 +101,7 @@ def main(argv):
 	with open(o_path, "w") as f:
 		for value in values:
 			f.write("%f\n" % value)
-		
+
 if __name__ == "__main__":
 	if len(sys.argv) > 1:
 		main(sys.argv[1:])

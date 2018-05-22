@@ -42,13 +42,13 @@ class LinearThreshold:
 	"""
 	def __init__(self, graph, seeds, weight = 0.01, global_threshold = 0.01):
 		if graph.is_directed is False:
-			graph = graph.to_directed()	
+			graph = graph.to_directed()
 		self.graph = graph
 		self.seeds = self.set_seeds(seeds)
 		self.set_threshold(global_threshold)
 		self.set_linkweight(weight)
 		nx.set_node_attributes(self.graph, 'pressure', dict(zip(self.graph.nodes(), [0] * self.graph.order())))
-		
+
 	def set_seeds(self, seeds):
 		in_seeds = filter(lambda x: x in self.graph.nodes(), seeds)
 		if in_seeds != seeds:
@@ -112,19 +112,19 @@ def diffusionrank(graph, heat, alpha = 0.85, gamma = 1, N = 100):
 
 class DiffusionRank:
 	"""
-		Yang, H., King, I., & Lyu, M. R. (2007). DiffusionRank: a possible penicillin for web spamming. In SIGIR '07: Proceedings of the 30th annual international ACM SIGIR conference on Research and development in information retrieval. 
+		Yang, H., King, I., & Lyu, M. R. (2007). DiffusionRank: a possible penicillin for web spamming. In SIGIR '07: Proceedings of the 30th annual international ACM SIGIR conference on Research and development in information retrieval.
 	"""
 	def __init__(self, graph, heat):
 		self.graph = graph
-		self.heat = np.matrix(heat).reshape(graph.order(), 1) 
+		self.heat = np.matrix(heat).reshape(graph.order(), 1)
 		self.I = np.diag([1] * graph.order())
 		self.H = self.get_heat_matrix()
 
 	def get_heat_matrix(self):
-		adj_mtx = nx.convert.to_numpy_matrix(self.graph)
+		adj_mtx = nx.convert_matrix.to_numpy_matrix(self.graph)
 		heat_mtx = -1 * np.eye(self.graph.order()) + get_norm_matrix(adj_mtx, axis = 0)
 		return(heat_mtx)
-	
+
 	def get_d_erH(self, alpha = 1, gamma = 1, N = 100):
 		p_mtx = nx.google_matrix(self.graph, alpha = alpha)
 		r_mtx = -1 * np.eye(self.graph.order()) + p_mtx
@@ -143,12 +143,12 @@ class IndependentCascade:
 		self.graph = graph
 		self.seeds = seeds
 		self.prob_degree()
-	
+
 	def prob_degree(self):
 		for n, nbrs in self.graph.adjacency_iter():
 			for nbr, eattr in nbrs.items():
 				eattr['prob'] = 1.0 / self.graph.out_degree(n)
-	
+
 	def try_touch(self, prob):
 		return (True if random.random() < prob else False)
 
